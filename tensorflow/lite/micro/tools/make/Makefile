@@ -479,6 +479,7 @@ $(TENSORFLOW_ROOT)tensorflow/lite/micro/kernels/zeros_like.cc
 MICROLITE_CC_SIGNAL_KERNEL_SRCS := \
 $(TENSORFLOW_ROOT)signal/micro/kernels/delay.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/dspcopy.cc \
+$(TENSORFLOW_ROOT)signal/micro/kernels/dsp_rfft.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/energy.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/fft_auto_scale_kernel.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/fft_auto_scale_common.cc \
@@ -496,6 +497,7 @@ $(TENSORFLOW_ROOT)signal/micro/kernels/pcan.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/window.cc \
 $(TENSORFLOW_ROOT)signal/src/circular_buffer.cc \
 $(TENSORFLOW_ROOT)signal/src/dspcopy_int16.cc \
+$(TENSORFLOW_ROOT)signal/src/dsp_rfft_int16.cc \
 $(TENSORFLOW_ROOT)signal/src/energy.cc \
 $(TENSORFLOW_ROOT)signal/src/fft_auto_scale.cc \
 $(TENSORFLOW_ROOT)signal/src/filter_bank.cc \

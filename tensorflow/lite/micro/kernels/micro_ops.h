@@ -141,6 +141,7 @@ TFLMInferenceRegistration RegisterInference_FULLY_CONNECTED();
 namespace tflm_signal {
 TFLMRegistration* Register_DELAY();
 TFLMRegistration* Register_DSP_COPY();
+TFLMRegistration* Register_DSP_RFFT();
 TFLMRegistration* Register_FFT_AUTO_SCALE();
 TFLMRegistration* Register_FILTER_BANK();
 TFLMRegistration* Register_FILTER_BANK_LOG();

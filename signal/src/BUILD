@@ -24,6 +24,21 @@ cc_library(
 )
 
 cc_library(
+    name = "dsp_rfft",
+    srcs = [
+        "dsp_rfft_int16.cc",
+    ],
+    hdrs = ["dsp_rfft.h"],
+    deps = [
+        ":complex",
+        "//signal/src/dsp_rfft_wrappers",
+    ],
+    copts = [
+	    "-D__GNUC_PYTHON__",
+    ],
+)
+
+cc_library(
     name = "fft_auto_scale",
     srcs = ["fft_auto_scale.cc"],
     hdrs = ["fft_auto_scale.h"],

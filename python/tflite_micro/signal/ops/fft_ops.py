@@ -81,8 +81,10 @@ def _fft_auto_scale_wrapper(fft_auto_scale_fn, default_name):
 
 rfft = _fft_wrapper(gen_fft_ops.signal_rfft, "signal_rfft")
 irfft = _fft_wrapper(gen_fft_ops.signal_irfft, "signal_irfft")
+dsp_rfft = _fft_wrapper(gen_fft_ops.signal_dsp_rfft, "signal_dsp_rfft")
 fft_auto_scale = _fft_auto_scale_wrapper(gen_fft_ops.signal_fft_auto_scale,
                                          "signal_fft_auto_scale")
 tf.no_gradient("signal_rfft")
 tf.no_gradient("signal_irfft")
+tf.no_gradient("signal_dsp_rfft")
 tf.no_gradient("signal_fft_auto_scale")

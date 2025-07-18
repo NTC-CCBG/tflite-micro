@@ -40,6 +40,7 @@ tflm_signal_kernel_library(
         "//signal/src:fft_auto_scale",
         "//signal/src:irfft",
         "//signal/src:rfft",
+        "//signal/src:dsp_rfft",
         "@tensorflow_cc_deps//:cc_library",
     ],
 )
