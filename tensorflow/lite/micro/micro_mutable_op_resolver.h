@@ -236,6 +236,14 @@ class MicroMutableOpResolver : public MicroOpResolver {
     return AddBuiltin(BuiltinOperator_DIV, tflite::Register_DIV(), ParseDiv);
   }
 
+  TfLiteStatus AddDspCopy() {
+    return AddCustom("SignalDspCopy", tflite::tflm_signal::Register_DSP_COPY());
+  }
+
+  TfLiteStatus AddDspRfft() {
+    return AddCustom("SignalDspRfft", tflite::tflm_signal::Register_DSP_RFFT());
+  }
+
   TfLiteStatus AddEmbeddingLookup() {
     return AddBuiltin(BuiltinOperator_EMBEDDING_LOOKUP,
                       Register_EMBEDDING_LOOKUP(), ParseEmbeddingLookup);

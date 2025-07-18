@@ -37,6 +37,7 @@ from tflite_micro.python.tflite_micro.signal.ops import fft_ops
 from tflite_micro.python.tflite_micro.signal.ops import energy_op
 from tflite_micro.python.tflite_micro.signal.ops import filter_bank_ops
 from tflite_micro.python.tflite_micro.signal.ops import pcan_op
+# from tflite_micro.python.tflite_micro.signal.ops import dspcopy_op
 from tflite_micro.python.tflite_micro import runtime
 
 _ENABLE_DEBUG = flags.DEFINE_enum(
@@ -93,6 +94,13 @@ class _GenerateFeature(tf.Module):
     params = self._params
     detail = self._detail
 
+    # Test dspcopy op
+    # test_output: tf.Tensor = dspcopy_op.dspcopy(audio_frame)  # type: ignore
+    # print('=== dspcopy_op ===')
+    # print(f'dspcopy input [{detail}]: {audio_frame!r}')
+    # print(f'dspcopy output [{detail}]: {test_output!r}')
+    # print('=== dspcopy_op ===')
+
     # update filter_bank_ops constants
     filter_bank_ops.FILTER_BANK_WEIGHT_SCALING_BITS = \
         params.filter_bank_scaling_bits
@@ -115,17 +123,21 @@ class _GenerateFeature(tf.Module):
     _debug_print_internal(f'scaling shift [{detail}]: {scaling_shift!r}')
 
     # compute FFT on scaled window output
-    _debug_print_internal(
-        f'fft size, log2 [{detail}]: {self._fft_size}, {self._fft_size_log2}')
-    fft_output: tf.Tensor = fft_ops.rfft(window_scaled_output, self._fft_size)
-    _debug_print_internal(f'fft output [{detail}]: {fft_output!r}')
+    # _debug_print_internal(
+    #     f'fft size, log2 [{detail}]: {self._fft_size}, {self._fft_size_log2}')
+    # fft_output: tf.Tensor = fft_ops.rfft(window_scaled_output, self._fft_size)
+    # _debug_print_internal(f'fft output [{detail}]: {fft_output!r}')
+
+    # Test DSP FFT on scaled window output
+    dspfft_output = fft_ops.dsp_rfft(window_scaled_output, self._fft_size)
+    _debug_print_internal(f'dsp fft output [{detail}]: {dspfft_output!r}')
 
     index_start = self._filter_bank_index_start
     index_end = self._filter_bank_index_end
     # convert fft output complex numbers to energy values
     _debug_print_internal(
         f'index start, end [{detail}]: {index_start}, {index_end}')
-    energy_output: tf.Tensor = energy_op.energy(fft_output, index_start,
+    energy_output: tf.Tensor = energy_op.energy(dspfft_output[:self._fft_size], index_start,
                                                 index_end)
     # Energy op does not zero indices outside [index_start,index_end).
     # The following operations to zero portions of the energy op output

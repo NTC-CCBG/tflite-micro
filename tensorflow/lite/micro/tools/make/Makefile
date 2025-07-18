@@ -96,7 +96,8 @@ INCLUDES := \
 -I$(DOWNLOADS_DIR)/gemmlowp \
 -I$(DOWNLOADS_DIR)/flatbuffers/include \
 -I$(DOWNLOADS_DIR)/kissfft \
--I$(DOWNLOADS_DIR)/ruy
+-I$(DOWNLOADS_DIR)/ruy \
+-I$(DOWNLOADS_DIR)/cmsis_dsp/Include
 
 ifneq ($(TENSORFLOW_ROOT),)
   INCLUDES += -I$(TENSORFLOW_ROOT)
@@ -477,6 +478,8 @@ $(TENSORFLOW_ROOT)tensorflow/lite/micro/kernels/zeros_like.cc
 
 MICROLITE_CC_SIGNAL_KERNEL_SRCS := \
 $(TENSORFLOW_ROOT)signal/micro/kernels/delay.cc \
+$(TENSORFLOW_ROOT)signal/micro/kernels/dspcopy.cc \
+$(TENSORFLOW_ROOT)signal/micro/kernels/dsp_rfft.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/energy.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/fft_auto_scale_kernel.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/fft_auto_scale_common.cc \
@@ -493,6 +496,8 @@ $(TENSORFLOW_ROOT)signal/micro/kernels/overlap_add.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/pcan.cc \
 $(TENSORFLOW_ROOT)signal/micro/kernels/window.cc \
 $(TENSORFLOW_ROOT)signal/src/circular_buffer.cc \
+$(TENSORFLOW_ROOT)signal/src/dspcopy_int16.cc \
+$(TENSORFLOW_ROOT)signal/src/dsp_rfft_int16.cc \
 $(TENSORFLOW_ROOT)signal/src/energy.cc \
 $(TENSORFLOW_ROOT)signal/src/fft_auto_scale.cc \
 $(TENSORFLOW_ROOT)signal/src/filter_bank.cc \
@@ -634,6 +639,11 @@ endif
 DOWNLOAD_RESULT := $(shell $(MAKEFILE_DIR)/pigweed_download.sh ${DOWNLOADS_DIR} $(TENSORFLOW_ROOT))
 ifneq ($(DOWNLOAD_RESULT), SUCCESS)
   $(error Something went wrong with the pigweed download: $(DOWNLOAD_RESULT))
+endif
+
+DOWNLOAD_RESULT := $(shell $(MAKEFILE_DIR)/cmsis_dsp_download.sh ${DOWNLOADS_DIR} $(TENSORFLOW_ROOT))
+ifneq ($(DOWNLOAD_RESULT), SUCCESS)
+  $(error Something went wrong with the cmsis_dsp download: $(DOWNLOAD_RESULT))
 endif
 
 include $(MAKEFILE_DIR)/third_party_downloads.inc

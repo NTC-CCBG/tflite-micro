@@ -140,6 +140,8 @@ TFLMInferenceRegistration RegisterInference_FULLY_CONNECTED();
 // TODO(b/160234179): Change custom OPs to also return by value.
 namespace tflm_signal {
 TFLMRegistration* Register_DELAY();
+TFLMRegistration* Register_DSP_COPY();
+TFLMRegistration* Register_DSP_RFFT();
 TFLMRegistration* Register_FFT_AUTO_SCALE();
 TFLMRegistration* Register_FILTER_BANK();
 TFLMRegistration* Register_FILTER_BANK_LOG();

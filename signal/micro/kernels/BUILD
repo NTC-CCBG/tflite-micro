@@ -9,6 +9,8 @@ tflm_cc_library(
     name = "register_signal_ops",
     srcs = [
         "delay.cc",
+        "dspcopy.cc",
+        "dsp_rfft.cc",
         "energy.cc",
         "fft_auto_scale_common.cc",
         "fft_auto_scale_kernel.cc",
@@ -26,6 +28,7 @@ tflm_cc_library(
         "window.cc",
     ],
     hdrs = [
+        "dsp_rfft.h",
         "fft_auto_scale_kernel.h",
         "filter_bank_square_root.h",
         "irfft.h",
@@ -36,6 +39,8 @@ tflm_cc_library(
     ],
     deps = [
         "//signal/src:circular_buffer",
+        "//signal/src:dspcopy",
+        "//signal/src:dsp_rfft",
         "//signal/src:energy",
         "//signal/src:fft_auto_scale",
         "//signal/src:filter_bank",
