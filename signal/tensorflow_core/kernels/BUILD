@@ -15,6 +15,15 @@ tflm_signal_kernel_library(
 )
 
 tflm_signal_kernel_library(
+    name = "dspcopy_kernel",
+    srcs = ["dspcopy_kernel.cc"],
+    deps = [
+        "//signal/src:dspcopy",
+        "@tensorflow_cc_deps//:cc_library",
+    ],
+)
+
+tflm_signal_kernel_library(
     name = "energy_kernel",
     srcs = ["energy_kernel.cc"],
     deps = [

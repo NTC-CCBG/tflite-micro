@@ -37,6 +37,7 @@ from tflite_micro.python.tflite_micro.signal.ops import fft_ops
 from tflite_micro.python.tflite_micro.signal.ops import energy_op
 from tflite_micro.python.tflite_micro.signal.ops import filter_bank_ops
 from tflite_micro.python.tflite_micro.signal.ops import pcan_op
+from tflite_micro.python.tflite_micro.signal.ops import dspcopy_op
 from tflite_micro.python.tflite_micro import runtime
 
 _ENABLE_DEBUG = flags.DEFINE_enum(
@@ -93,6 +94,13 @@ class _GenerateFeature(tf.Module):
     params = self._params
     detail = self._detail
 
+    # Test dspcopy op
+    test_output: tf.Tensor = dspcopy_op.dspcopy(audio_frame)  # type: ignore
+    print('=== dspcopy_op ===')
+    print(f'dspcopy input [{detail}]: {audio_frame!r}')
+    print(f'dspcopy output [{detail}]: {test_output!r}')
+    print('=== dspcopy_op ===')
+
     # update filter_bank_ops constants
     filter_bank_ops.FILTER_BANK_WEIGHT_SCALING_BITS = \
         params.filter_bank_scaling_bits
@@ -100,12 +108,12 @@ class _GenerateFeature(tf.Module):
     filter_bank_ops.FILTER_BANK_CHANNEL_BLOCK_SIZE = \
         params.filter_bank_channel_block_size
 
-    _debug_print_internal(f'audio frame output [{detail}]: {audio_frame!r}')
+    _debug_print_internal(f'audio frame output [{detail}]: {test_output!r}')
 
     # apply window to audio frame
     weights = self._hann_window_weights_tensor
     _debug_print_internal(f'window weights output [{detail}]: {weights!r}')
-    window_output: tf.Tensor = window_op.window(audio_frame, weights,
+    window_output: tf.Tensor = window_op.window(test_output, weights,
                                                 params.window_scaling_bits)
     _debug_print_internal(f'window output [{detail}]: {window_output!r}')
 

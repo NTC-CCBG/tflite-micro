@@ -9,6 +9,7 @@ tflm_cc_library(
     name = "register_signal_ops",
     srcs = [
         "delay.cc",
+        "dspcopy.cc",
         "energy.cc",
         "fft_auto_scale_common.cc",
         "fft_auto_scale_kernel.cc",
@@ -36,6 +37,7 @@ tflm_cc_library(
     ],
     deps = [
         "//signal/src:circular_buffer",
+        "//signal/src:dspcopy",
         "//signal/src:energy",
         "//signal/src:fft_auto_scale",
         "//signal/src:filter_bank",

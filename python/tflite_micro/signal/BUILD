@@ -18,6 +18,7 @@ cc_library(
     visibility = [":signal_friends"],
     deps = [
         ":delay_op_cc",
+        ":dspcopy_op",
         ":energy_op_cc",
         ":fft_ops_cc",
         ":filter_bank_ops_cc",
@@ -38,6 +39,7 @@ py_library(
     visibility = ["//visibility:public"],
     deps = [
         ":delay_op",
+        ":dspcopy_op",
         ":energy_op",
         ":fft_ops",
         ":filter_bank_ops",
@@ -74,6 +76,18 @@ py_test(
         ":delay_op",
         requirement("numpy"),
         requirement("tensorflow"),
+    ],
+)
+
+py_tflm_signal_library(
+    name = "dspcopy_op",
+    srcs = ["ops/dspcopy_op.py"],
+    cc_op_defs = ["//signal/tensorflow_core/ops:dspcopy_op"],
+    cc_op_kernels = [
+        "//signal/tensorflow_core/kernels:dspcopy_kernel",
+    ],
+    deps = [
+        "//python/tflite_micro/signal/utils:util",
     ],
 )
 

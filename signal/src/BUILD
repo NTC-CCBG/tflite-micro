@@ -9,6 +9,21 @@ cc_library(
 )
 
 cc_library(
+    name = "dspcopy",
+    srcs = [
+        "dspcopy_int16.cc",
+    ],
+    hdrs = ["dspcopy.h"],
+    deps = [
+        ":complex",
+        "//signal/src/dspcopy_wrappers",
+    ],
+    copts = [
+	    "-D__GNUC_PYTHON__",
+    ],
+)
+
+cc_library(
     name = "fft_auto_scale",
     srcs = ["fft_auto_scale.cc"],
     hdrs = ["fft_auto_scale.h"],

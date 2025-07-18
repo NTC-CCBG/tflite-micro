@@ -1,0 +1,45 @@
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+licenses(["notice"])  # Apache 2.0
+
+cc_library(
+    name = "cmsis_dsp",
+    srcs = [
+        "Source/BasicMathFunctions/arm_shift_q15.c",
+        "Source/CommonTables/arm_common_tables.c",
+        "Source/CommonTables/arm_const_structs.c",
+        "Source/SupportFunctions/arm_copy_q15.c",
+        "Source/TransformFunctions/arm_bitreversal.c",
+        "Source/TransformFunctions/arm_bitreversal2.c",
+        "Source/TransformFunctions/arm_cfft_q15.c",
+        "Source/TransformFunctions/arm_cfft_radix4_q15.c",
+        "Source/TransformFunctions/arm_rfft_init_q15.c",
+        "Source/TransformFunctions/arm_rfft_q15.c",
+    ],
+    hdrs = [
+        "Include/arm_common_tables.h",
+        "Include/arm_const_structs.h",
+        "Include/arm_math_memory.h",
+        "Include/arm_math_types.h",
+        "Include/dsp/none.h",
+        "Include/dsp/utils.h",
+        "Include/dsp/basic_math_functions.h",
+        "Include/dsp/complex_math_functions.h",
+        "Include/dsp/fast_math_functions.h",
+        "Include/dsp/support_functions.h",
+        "Include/dsp/transform_functions.h",
+    ],
+    includes = [
+        "Include",
+        "PrivateInclude",
+        "@cmsiscore//CMSIS/Core/Include",
+    ],
+    deps = [
+        "@cmsiscore//:cmsis_core",
+    ],
+    copts = [
+	    "-D__GNUC_PYTHON__",
+    ],
+)
